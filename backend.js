@@ -8,13 +8,26 @@ const app=express();
 const port=5000;
 const JWT_SECRET="mysecretkey"
 
+
+console.log("backend started...");
+
 // middleware 
 app.use(cors());
 app.use(express.json());
 
+app.get("/",(req,res)=>{
+    res.send("backend is running");
+});
+
+
+app .listen(port,()=>{
+    console.log(`server started at port ${port}`);
+});
+
 
 mongoose.connect("mongodb+srv://akashkumarsoni800:8002546764@bookweb.8tz5tqf.mongodb.net/")
-
+.then(() => console.log("MongoDB connected ✅"))
+  .catch((err) => console.log("MongoDB connection error:", err));
 //user schema
 const userschema=new mongoose.Schema({
     username:String,
