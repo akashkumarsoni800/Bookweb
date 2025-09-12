@@ -35,7 +35,7 @@ const userschema=new mongoose.Schema({
     password:String,
     address: String,
 });
-const user=new mongoose.model("user",userschema);
+const User= mongoose.model("user",userschema);
 
 //book schema
 const booschema=new mongoose.Schema({
@@ -57,13 +57,13 @@ const uploadschema=new mongoose.Schema({
 app.post ("/signup" , async (req,res)=>{
     const {name,mobileno,password,address}=req.body;
     try {
-        const existingUser = await user.findOne({ mobileno });
+        const existingUser = await User.findOne({ mobileno });
         if (existingUser) {
             return res.status(400).json({ error: "User already exists" });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newuser = new user({ name, mobileno, password: hashedPassword, address });
-        await newuser.save();
+        const newUser = new User({ name, mobileno, password: hashedPassword, address });
+        await newUser.save();
         res.json({ message: "signup successful" });
     } catch (error) {
         res.status(500).json({ error: error.message });
