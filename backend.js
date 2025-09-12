@@ -57,12 +57,12 @@ const uploadschema=new mongoose.Schema({
 app.post ("/signup" , async (req,res)=>{
     const {name,mobileno,password,address}=req.body;
     try {
-        const existingUser = await userschema.findOne({ mobileno });
+        const existingUser = await user.findOne({ mobileno });
         if (existingUser) {
             return res.status(400).json({ error: "User already exists" });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newuser = new user({ name, mobileno, password: hashedPassword, address });
+        const newuser = new user({ username, mobileno, password: hashedPassword, address });
         await newuser.save();
         res.json({ message: "signup successful" });
     } catch (error) {
@@ -73,7 +73,7 @@ app.post ("/signup" , async (req,res)=>{
     app.post ("/login" , async (req,res)=>{
         const {username,password}=req.body;
         try {
-            const user = await userschema.findOne({ username });
+            const user = await user.findOne({ username });
             if (!user) {
                 return res.status(400).json({ error: "User not found" });
             }
