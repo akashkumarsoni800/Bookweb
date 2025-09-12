@@ -73,15 +73,15 @@ app.post ("/signup" , async (req,res)=>{
     app.post ("/login" , async (req,res)=>{
         const {name,password}=req.body;
         try {
-            const existinguser = await user.findOne({ name });
-            if (!existinguser) {
+            const existingUser = await User.findOne({ name });
+            if (!existingUser) {
                 return res.status(400).json({ error: "User not found" });
             }
-            const isMatch = await bcrypt.compare(password, user.password);
+            const isMatch = await bcrypt.compare(password, existingUser.password);
             if (!isMatch) {
                 return res.status(400).json({ error: "Invalid credentials" });
             }
-            const token = jwt.sign({ id: user._id }, JWT_SECRET);
+            const token = jwt.sign({ id: existingUser._id }, JWT_SECRET);
             res.json({ token });
         } catch (error) {
             res.status(500).json({ error: error.message });
