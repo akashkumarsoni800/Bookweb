@@ -30,7 +30,7 @@ mongoose.connect("mongodb+srv://akashkumarsoni800:8002546764@bookweb.8tz5tqf.mon
   .catch((err) => console.log("MongoDB connection error:", err));
 //user schema
 const userschema=new mongoose.Schema({
-    username:String,
+    name:String,
     mobileno:{type:String , unique:true },
     password:String,
     address: String,
@@ -48,7 +48,7 @@ const booschema=new mongoose.Schema({
 })
 //upload user schema
 const uploadschema=new mongoose.Schema({
-    yourname:String,
+    name:String,
     mobileno:String,
     email:{type:String , unique:true },
     address:String,
@@ -62,7 +62,7 @@ app.post ("/signup" , async (req,res)=>{
             return res.status(400).json({ error: "User already exists" });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newuser = new user({ username, mobileno, password: hashedPassword, address });
+        const newuser = new user({ name, mobileno, password: hashedPassword, address });
         await newuser.save();
         res.json({ message: "signup successful" });
     } catch (error) {
@@ -71,10 +71,10 @@ app.post ("/signup" , async (req,res)=>{
     });
     //login
     app.post ("/login" , async (req,res)=>{
-        const {username,password}=req.body;
+        const {name,password}=req.body;
         try {
-            const user = await user.findOne({ username });
-            if (!user) {
+            const existinguser = await user.findOne({ name });
+            if (!existinguser) {
                 return res.status(400).json({ error: "User not found" });
             }
             const isMatch = await bcrypt.compare(password, user.password);
