@@ -34,7 +34,9 @@ const userschema=new mongoose.Schema({
     mobileno:{type:String , unique:true },
     password:String,
     address: String,
-})
+});
+const user=new mongoose.model("user",userschema);
+
 //book schema
 const booschema=new mongoose.Schema({
     bookname:String,
