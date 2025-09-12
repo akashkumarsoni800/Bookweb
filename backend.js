@@ -71,9 +71,9 @@ app.post ("/signup" , async (req,res)=>{
     });
     //login
     app.post ("/login" , async (req,res)=>{
-        const {name,password}=req.body;
+        const {mobileno,password}=req.body;
         try {
-            const existingUser = await User.findOne({ name });
+            const existingUser = await User.findOne({ mobileno });
             if (!existingUser) {
                 return res.status(400).json({ error: "User not found" });
             }
