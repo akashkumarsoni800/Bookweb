@@ -25,7 +25,7 @@ app .listen(port,()=>{
 });
 
 
-mongoose.connect("mongodb+srv://akashkumarsoni800:8002546764@bookweb.8tz5tqf.mongodb.net/")
+mongoose.connect("mongodb+srv://akashkumarsoni800:8002546764@bookweb.8tz5tqf.mongodb.net/bookweb")
 .then(() => console.log("MongoDB connected ✅"))
   .catch((err) => console.log("MongoDB connection error:", err));
 //user schema
@@ -35,7 +35,7 @@ const userschema=new mongoose.Schema({
     password:String,
     address: String,
 });
-const User= mongoose.model("user",userschema);
+const User= mongoose.model("User",userschema);
 
 //book schema
 const booschema=new mongoose.Schema({
