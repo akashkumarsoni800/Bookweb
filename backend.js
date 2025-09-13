@@ -30,7 +30,7 @@ mongoose.connect("mongodb+srv://akashkumarsoni800:8002546764@bookweb.8tz5tqf.mon
   .catch((err) => console.log("MongoDB connection error:", err));
 //user schema
 const userschema=new mongoose.Schema({
-    name:String,
+    username:{type: String, required:true},
     mobileno:{type:String , unique:true },
     password:String,
     address: String,
@@ -38,7 +38,7 @@ const userschema=new mongoose.Schema({
 const User= mongoose.model("User",userschema);
 
 //book schema
-const booschema=new mongoose.Schema({
+const booSchema=new mongoose.Schema({
     bookname:String,
     bookauthor:String,
     bookpublication:String,
@@ -46,23 +46,27 @@ const booschema=new mongoose.Schema({
     bookvolume:String,
     bookprice:Number,
 })
+const Book = mongoose.model("Book", bookSchema);
+
 //upload user schema
-const uploadschema=new mongoose.Schema({
+const uploadSchema=new mongoose.Schema({
     name:String,
     mobileno:String,
     email:{type:String , unique:true },
     address:String,
 })
+const UploadUser = mongoose.model("UploadUser", uploadSchema);
+
 //sign up
 app.post ("/signup" , async (req,res)=>{
-    const {name,mobileno,password,address}=req.body;
+    const {username,mobileno,password,address}=req.body;
     try {
         const existingUser = await User.findOne({ mobileno });
         if (existingUser) {
             return res.status(400).json({ error: "User already exists" });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ name, mobileno, password: hashedPassword, address });
+        const newUser = new User({ username, mobileno, password: hashedPassword, address });
         await newUser.save();
         res.json({ message: "signup successful" });
     } catch (error) {
@@ -71,9 +75,9 @@ app.post ("/signup" , async (req,res)=>{
     });
     //login
     app.post ("/login" , async (req,res)=>{
-        const {mobileno,password}=req.body;
+        const {username,password}=req.body;
         try {
-            const existingUser = await User.findOne({ mobileno });
+            const existingUser = await User.findOne({ username });
             if (!existingUser) {
                 return res.status(400).json({ error: "User not found" });
             }
