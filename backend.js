@@ -63,31 +63,31 @@ app.post ("/signup" , async (req,res)=>{
     try {
         const existingUser = await User.findOne({ mobileno });
         if (existingUser) {
-            return res.status(400).json({ error: "User already exists" });
+            return res.status(400).json({ message: "User already exists" });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({ name, mobileno, password: hashedPassword, address });
         await newUser.save();
         res.json({ message: "signup successful" });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ message: "Server error", error: error.message });
     }
     });
     //login
     app.post ("/login" , async (req,res)=>{
-        const {name,password}=req.body;
+        const {mobileno,password}=req.body;
         try {
-            const existingUser = await User.findOne({ name });
+            const existingUser = await User.findOne({ mobileno });
             if (!existingUser) {
-                return res.status(400).json({ error: "User not found" });
+                return res.status(400).json({ message: "User not found" });
             }
             const isMatch = await bcrypt.compare(password, existingUser.password);
             if (!isMatch) {
-                return res.status(400).json({ error: "Invalid credentials" });
+                return res.status(400).json({ message: "Invalid credentials" });
             }
             const token = jwt.sign({ id: existingUser._id }, JWT_SECRET);
-            res.json({ token, name: existingUser.name });
+            res.json({ message: "Login successful", token, name: existingUser.name });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.status(500).json({ message:"Server error", error: error.message });
         }
     });
