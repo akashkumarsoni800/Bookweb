@@ -49,13 +49,13 @@ const bookSchema=new mongoose.Schema({
 const Book = mongoose.model("Book", bookSchema);
 
 //upload user schema
-const uploadSchema=new mongoose.Schema({
+const uploadUserSchema=new mongoose.Schema({
     name:String,
     mobileno:String,
     email:{type:String , unique:true },
     address:String,
 })
-const UploadUser = mongoose.model("UploadUser", uploadSchema);
+const UploadUser = mongoose.model("UploadUser", uploadUserSchema);
 
 //sign up
 app.post ("/signup" , async (req,res)=>{
