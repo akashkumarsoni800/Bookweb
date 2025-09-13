@@ -30,7 +30,7 @@ mongoose.connect("mongodb+srv://akashkumarsoni800:8002546764@bookweb.8tz5tqf.mon
   .catch((err) => console.log("MongoDB connection error:", err));
 //user schema
 const userSchema=new mongoose.Schema({
-    username:{type: String, required:true},
+    name:{type: String, required:true},
     mobileno:{type:String , unique:true },
     password:String,
     address: String,
@@ -59,14 +59,14 @@ const UploadUser = mongoose.model("UploadUser", uploadUserSchema);
 
 //sign up
 app.post ("/signup" , async (req,res)=>{
-    const {username,mobileno,password,address}=req.body;
+    const {name,mobileno,password,address}=req.body;
     try {
         const existingUser = await User.findOne({ mobileno });
         if (existingUser) {
             return res.status(400).json({ error: "User already exists" });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ username, mobileno, password: hashedPassword, address });
+        const newUser = new User({ name, mobileno, password: hashedPassword, address });
         await newUser.save();
         res.json({ message: "signup successful" });
     } catch (error) {
@@ -75,9 +75,9 @@ app.post ("/signup" , async (req,res)=>{
     });
     //login
     app.post ("/login" , async (req,res)=>{
-        const {username,password}=req.body;
+        const {name,password}=req.body;
         try {
-            const existingUser = await User.findOne({ username });
+            const existingUser = await User.findOne({ name });
             if (!existingUser) {
                 return res.status(400).json({ error: "User not found" });
             }
@@ -86,7 +86,7 @@ app.post ("/signup" , async (req,res)=>{
                 return res.status(400).json({ error: "Invalid credentials" });
             }
             const token = jwt.sign({ id: existingUser._id }, JWT_SECRET);
-            res.json({ token });
+            res.json({ token, name: existingUser.name });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
