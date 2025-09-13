@@ -38,7 +38,7 @@ const userschema=new mongoose.Schema({
 const User= mongoose.model("User",userschema);
 
 //book schema
-const booSchema=new mongoose.Schema({
+const bookSchema=new mongoose.Schema({
     bookname:String,
     bookauthor:String,
     bookpublication:String,
