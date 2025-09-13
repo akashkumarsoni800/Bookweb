@@ -29,13 +29,13 @@ mongoose.connect("mongodb+srv://akashkumarsoni800:8002546764@bookweb.8tz5tqf.mon
 .then(() => console.log("MongoDB connected ✅"))
   .catch((err) => console.log("MongoDB connection error:", err));
 //user schema
-const userschema=new mongoose.Schema({
+const userSchema=new mongoose.Schema({
     username:{type: String, required:true},
     mobileno:{type:String , unique:true },
     password:String,
     address: String,
 });
-const User= mongoose.model("User",userschema);
+const User= mongoose.model("User",userSchema);
 
 //book schema
 const bookSchema=new mongoose.Schema({
