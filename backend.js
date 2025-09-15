@@ -56,6 +56,35 @@ const uploadUserSchema=new mongoose.Schema({
     address:String,
 })
 const UploadUser = mongoose.model("UploadUser", uploadUserSchema);
+// Upload Book
+app.post("/upload-book", async (req, res) => {
+  try {
+    const { bookname, bookauthor, bookpublication, booklanguage, bookvolume, bookprice } = req.body;
+
+    const newBook = new Book({
+      bookname,
+      bookauthor,
+      bookpublication,
+      booklanguage,
+      bookvolume,
+      bookprice,
+    });
+
+    await newBook.save();
+    res.json({ message: "Book uploaded successfully", book: newBook });
+  } catch (error) {
+    res.status(500).json({ message: "Error uploading book", error: error.message });
+  }
+});
+// Get all books (latest first)
+app.get("/books", async (req, res) => {
+  try {
+    const books = await Book.find().sort({ _id: -1 }); // newest book upar
+    res.json(books);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching books", error: error.message });
+  }
+});
 
 //sign up
 app.post ("/signup" , async (req,res)=>{
