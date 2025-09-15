@@ -5,9 +5,8 @@ const jwt=require ("jsonwebtoken");
 const cors=require ("cors");
 
 const app=express();
-const port=5000;
-const JWT_SECRET="mysecretkey"
-
+const port=process.env.PORT ||5000;
+const JWT_SECRET = process.env.JWT_SECRET || "fallbackSecret";
 
 console.log("backend started...");
 
@@ -97,7 +96,8 @@ app.post ("/signup" , async (req,res)=>{
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({ name, mobileno, password: hashedPassword, address });
         await newUser.save();
-        res.json({ message: "signup successful" });
+         const token = jwt.sign({ id: newUser._id }, JWT_SECRET, { expiresIn: "7d" });
+        res.json({ message: "signup successful", token, name: newUser.name });
     } catch (error) {
         res.status(500).json({ message: "Server error", error: error.message });
     }
