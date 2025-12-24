@@ -78,7 +78,7 @@ app.post("/upload-book", async (req, res) => {
 // Get all books (latest first)
 app.get("/books", async (req, res) => {
   try {
-    const books = await Book.find().sort({ _id: -1 }); // newest book upar
+    const books = await Book.find().sort({ _id: -1,bookname }); // newest book upar
     res.json(books);
   } catch (error) {
     res.status(500).json({ message: "Error fetching books", error: error.message });
