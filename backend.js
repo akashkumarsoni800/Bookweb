@@ -67,10 +67,11 @@ app.post("/upload-book", async (req, res) => {
       booklanguage,
       bookvolume,
       bookprice,
-      name,
+        user,
+     /* name,
       mobileno,
       email,
-      address
+      address,*/
     });
 
     await newBook.save();
