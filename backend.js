@@ -44,17 +44,23 @@ const bookSchema=new mongoose.Schema({
     booklanguage:String,
     bookvolume:String,
     bookprice:Number,
+    user:{ 
+    name:String,
+    mobileno:String,
+    email:{type:String , unique:true },
+    address:String,
+    }
 })
 const Book = mongoose.model("Book", bookSchema);
 
-//upload user schema
+/*upload user schema
 const uploadUserSchema=new mongoose.Schema({
     name:String,
     mobileno:String,
     email:{type:String , unique:true },
     address:String,
 })
-const UploadUser = mongoose.model("UploadUser", uploadUserSchema);
+const UploadUser = mongoose.model("UploadUser", uploadUserSchema);*/
 // Upload Book
 app.post("/upload-book", async (req, res) => {
   try {
@@ -67,7 +73,8 @@ app.post("/upload-book", async (req, res) => {
       booklanguage,
       bookvolume,
       bookprice,
-        user,
+        
+    user,
      /* name,
       mobileno,
       email,
