@@ -46,8 +46,8 @@ const bookSchema=new mongoose.Schema({
     bookprice:Number,
     user:{ 
     name:String,
-    mobileno:String,
-    email:{type:String , unique:true },
+    mobile:String,
+    email:String ,
     address:String,
     }
 })
