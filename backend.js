@@ -58,7 +58,7 @@ const UploadUser = mongoose.model("UploadUser", uploadUserSchema);
 // Upload Book
 app.post("/upload-book", async (req, res) => {
   try {
-    const { bookname, bookauthor, bookpublication, booklanguage, bookvolume, bookprice } = req.body;
+    const { bookname, bookauthor, bookpublication, booklanguage, bookvolume, bookprice,user } = req.body;
 
     const newBook = new Book({
       bookname,
@@ -67,6 +67,10 @@ app.post("/upload-book", async (req, res) => {
       booklanguage,
       bookvolume,
       bookprice,
+      name,
+      mobileno,
+      email,
+      address
     });
 
     await newBook.save();
