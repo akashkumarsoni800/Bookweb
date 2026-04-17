@@ -38,6 +38,13 @@ const userSchema=new mongoose.Schema({
 const User= mongoose.model("User",userSchema);
 
 //book schema
+const bookSchema=new mongoose.Schema({
+    bookname:String,
+    bookauthor:String,
+    bookpublication:String,
+    booklanguage:String,
+    bookvolume:String,
+    bookprice:Number,
     bookclass:String,
     image:String,
     user:{
