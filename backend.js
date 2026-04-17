@@ -26,7 +26,16 @@ app .listen(port,()=>{
 
 
 mongoose.connect("mongodb+srv://akashkumarsoni800:8002546764@bookweb.8tz5tqf.mongodb.net/bookweb")
-.then(() => console.log("MongoDB connected ✅"))
+.then(async () => {
+    console.log("MongoDB connected ✅");
+    // Drop the problematic unique index if it exists
+    try {
+        await mongoose.connection.collection("books").dropIndex("user.email_1");
+        console.log("Successfully dropped duplicate email index! 🚀");
+    } catch (e) {
+        // Index doesn't exist, which is fine
+    }
+})
   .catch((err) => console.log("MongoDB connection error:", err));
 //user schema
 const userSchema=new mongoose.Schema({
