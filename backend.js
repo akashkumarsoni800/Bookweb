@@ -12,7 +12,8 @@ console.log("backend started...");
 
 // middleware 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 app.get("/",(req,res)=>{
     res.send("backend is running");
@@ -37,18 +38,13 @@ const userSchema=new mongoose.Schema({
 const User= mongoose.model("User",userSchema);
 
 //book schema
-const bookSchema=new mongoose.Schema({
-    bookname:String,
-    bookauthor:String,
-    bookpublication:String,
-    booklanguage:String,
-    bookvolume:String,
-    bookprice:Number,
-    user:{ 
-    name:String,
-    mobile:String,
-    email:String ,
-    address:String,
+    bookclass:String,
+    image:String,
+    user:{
+        name:String,
+        mobile:String,
+        email:String,
+        address:String
     }
 })
 const Book = mongoose.model("Book", bookSchema);
@@ -64,7 +60,7 @@ const UploadUser = mongoose.model("UploadUser", uploadUserSchema);*/
 // Upload Book
 app.post("/upload-book", async (req, res) => {
   try {
-    const { bookname, bookauthor, bookpublication, booklanguage, bookvolume, bookprice,user } = req.body;
+    const { bookname, bookauthor, bookpublication, booklanguage, bookvolume, bookprice, bookclass, image, user } = req.body;
 
     const newBook = new Book({
       bookname,
@@ -73,12 +69,9 @@ app.post("/upload-book", async (req, res) => {
       booklanguage,
       bookvolume,
       bookprice,
-        
-    user,
-     /* name,
-      mobileno,
-      email,
-      address,*/
+      bookclass,
+      image,
+      user
     });
 
     await newBook.save();
