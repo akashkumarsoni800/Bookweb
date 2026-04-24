@@ -1,0 +1,174 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    background-color: rgb(241, 240, 240);
+
+
+    }
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(118, 98, 98);
+    padding: 10px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+ .logo{
+padding-top: 20px;
+  font-size:large;
+  font-family: Arial, Helvetica, sans-serif;
+ text-align: center;
+ padding-bottom: 10px;
+ color: white;
+ background-color:rgb(118, 98, 98) ;
+}
+
+
+
+.navbar-right {
+    background-color: rgb(118, 98, 98);
+}
+
+.navbar-right a {
+    background-color: rgb(118, 98, 98);
+}
+
+.navbar-right button {
+
+    cursor: pointer;
+    width: 90px;
+    height: 30px;
+    border-radius: 10px;
+
+    background-color: white;
+    margin: 10px;
+
+}
+
+
+
+
+.navbar-right button:hover {
+    background-color: blue;
+    color: white;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.box1 {
+    padding: 20px;
+    margin-right: 40px;
+    margin-top: 40px;
+}
+
+.box1 h1 {
+    padding: 10px;
+    color: rgb(118, 98, 98);
+    font-family: Arial;
+
+}
+
+.box1 p {
+
+    padding: 20px;
+    font-size: 18px;
+    color: rgb(86, 73, 73);
+    font-family: Arial;
+}
+
+.login-btn {
+    width: 90px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: white;
+    margin: 10px 20px;
+
+}
+
+.signup-btn {
+    width: 90px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: white;
+    margin: 10px 20px;
+
+
+}
+
+.login-btn:hover {
+    background-color: rgb(114, 60, 60);
+    pointer: cursor;
+}
+
+.signup-btn:hover {
+    background-color: rgb(114, 60, 60);
+    pointer: cursor;
+}
+
+.box2 img {
+    border-radius: 10px;
+
+    height: 200px;
+    width: 300px;
+    margin: 40px 00px;
+
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .box1 {
+        margin-right: 0;
+        text-align: center;
+    }
+
+    .box2 img {
+        width: 90%;
+        height: auto;
+        margin: 20px auto;
+    }
+
+    .navbar-right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-right a {
+        margin: 5px 0;
+    }
+
+    .navbar-left img {
+        height: 35px;
+        width: 35px;
+    }
+}

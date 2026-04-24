@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+        Sign-Up form with HTML and CSS
+    </title>
+    <link rel="stylesheet" href="../CSS/sign up .css">
+    <link rel="stylesheet" href="../CSS/navbar.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="nav-left">
+            <label class="checkbtn" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </label>
+            <label class="logo">BOOK WEB</label>
+        </div>
+
+        <ul id="menu-list">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="./help.html">Help</a></li>
+            <li><a href="./My book.html">My Books</a></li>
+            <li><a href="./about us.html">About Us</a></li>
+            <li><a href="./contact us.html">Contact Us</a></li>
+        </ul>
+
+        <div class="search-container">
+            <select class="search-category" id="searchCategory">
+                <option value="all">All</option>
+                <option value="class 9">Class 9</option>
+                <option value="class 10">Class 10</option>
+                <option value="class 11">Class 11</option>
+                <option value="class 12">Class 12</option>
+                <option value="diploma">Diploma</option>
+            </select>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search books...">
+            <button class="search-btn" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <div id="search-suggestions"></div>
+        </div>
+
+        <div class="navbar-right">
+            <div class="profile-container" id="profileArea">
+                <i class="fa-solid fa-circle-user"></i>
+            </div>
+            <!-- Profile Popup -->
+            <div class="profile-popup" id="profilePopup">
+                <div class="popup-header">
+                    <h4 id="popupName">Guest User</h4>
+                    <p id="popupEmail"></p>
+                </div>
+                <div class="popup-links">
+                    <a href="javascript:void(0)" onclick="editProfile()"><i class="fa-solid fa-user-pen"></i> Edit Profile</a>
+                    <a href="javascript:void(0)" class="exit-btn" onclick="logoutUser()"><i class="fa-solid fa-right-from-bracket"></i> Exit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="container">
+        <form id="signupForm" class="signup-box">
+            <h2>Sign Up</h2>
+            <input type="text" id="name" placeholder="Name:" required />
+            <input type="text" id="mobile" placeholder="Mobile no." required />
+            <input type="password" id="password" placeholder="Password:" required />
+            <textarea id="address" placeholder="Write Your Address Here..." rows="5" required></textarea>
+            <button type="submit">Sign Up</button>
+            <p class="login-link">I have an account <a href="login.html">Log In</a></p>
+        </form>
+        <p id="result"></p> 
+    </div>
+    <script src="../JAVASCRIPT/navbar.js"></script>
+    <script>
+        // 👇 Apna backend URL yaha daalo (Render ka)
+    const backendURL = "https://bookweb-backend-vu2o.onrender.com";
+
+    document.getElementById("signupForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const mobile = document.getElementById("mobile").value;
+      const password = document.getElementById("password").value;
+      const address = document.getElementById("address").value;
+
+      try {
+        let response = await fetch(backendURL + "/signup", {
+         // const response = await fetch("http://localhost:5000/signup", {
+
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, mobileno: mobile, password, address })
+        });
+          const data = await response.json();
+
+        const message = data.message || (response.ok ? "✅ Signup successful" : "❌ Something went wrong");
+    
+         // ✅ Safe JSON parsing: agar response invalid ho to crash na kare
+          //      let data = {};
+            //    try {
+              //      data = await response.json();
+                //} catch (err) {
+                 //   data = {};
+                //}
+
+                // ✅ Robust message handling: fallback agar data.message undefined ho
+              //  const message = data.message || (response.ok ? "Signup successful" : "Something went wrong");
+
+        if (!response.ok) { // ✅ Agar backend error return kare
+      document.getElementById("result").innerText = "❌ " + message;
+      return;
+    }
+
+    document.getElementById("result").innerText = "✅ " + message;
+      
+    }catch (err) {
+    document.getElementById("result").innerText = "❌ Network/Error: " + err.message;
+    }   
+});
+    </script>
+
+</body>
+
+</html>

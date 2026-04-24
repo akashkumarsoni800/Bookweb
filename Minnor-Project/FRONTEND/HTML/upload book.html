@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/upload book.css"/>
+    <link rel="stylesheet" href="../CSS/navbar.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-left">
+            <label class="checkbtn" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </label>
+            <label class="logo">BOOK WEB</label>
+        </div>
+
+        <ul id="menu-list">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="./help.html">Help</a></li>
+            <li><a href="./My book.html">My Books</a></li>
+            <li><a href="./about us.html">About Us</a></li>
+            <li><a href="./contact us.html">Contact Us</a></li>
+        </ul>
+
+        <div class="search-container">
+            <select class="search-category" id="searchCategory">
+                <option value="all">All</option>
+                <option value="class 9">Class 9</option>
+                <option value="class 10">Class 10</option>
+                <option value="class 11">Class 11</option>
+                <option value="class 12">Class 12</option>
+                <option value="diploma">Diploma</option>
+            </select>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search books...">
+            <button class="search-btn" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <div id="search-suggestions"></div>
+        </div>
+
+        <div class="navbar-right">
+            <div class="profile-container" id="profileArea">
+                <i class="fa-solid fa-circle-user"></i>
+            </div>
+            <!-- Profile Popup -->
+            <div class="profile-popup" id="profilePopup">
+                <div class="popup-header">
+                    <h4 id="popupName">Guest User</h4>
+                    <p id="popupEmail"></p>
+                </div>
+                <div class="popup-links">
+                    <a href="javascript:void(0)" onclick="editProfile()"><i class="fa-solid fa-user-pen"></i> Edit Profile</a>
+                    <a href="javascript:void(0)" class="exit-btn" onclick="logoutUser()"><i class="fa-solid fa-right-from-bracket"></i> Exit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="img">
+            <img src="../IMAGES/aa.jpg" id="imagePreview" alt="Preview" height="280px" width="300px"/>
+            <div style="margin-top: 10px;">
+                <label for="bookImage" style="cursor: pointer; background: #6363f1; color: white; padding: 5px 10px; border-radius: 5px;">Upload Book Image</label>
+                <input type="file" id="bookImage" accept="image/*" style="display: none;" onchange="previewImage(event)"/>
+            </div>
+        </div>
+    <div class="data">
+       <h1>Fill These Details</h1>
+            <input type="text" placeholder=" Book Name:" id="bookname" required /><br><br>
+            <input type="text" placeholder="Book Author:" id="bookauthor" required /><br><br>
+            <input type="text" placeholder="Book Publication:" id="bookpublication" required /><br><br>
+            <input type="text" placeholder=" Book Language:" id="booklanguage" required /><br><br>
+            <input type="number" placeholder="Book Volume:" id="bookvolume" required /><br><br>
+            <input type="text" placeholder="Book Price:" id="bookprice" required /><br><br>
+            <select id="bookclass" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background: white;" required>
+                <option value="" disabled selected>Select Class</option>
+                <option value="class 9">Class 9</option>
+                <option value="class 10">Class 10</option>
+                <option value="class 11">Class 11</option>
+                <option value="class 12">Class 12</option>
+                <option value="diploma">Diploma</option>
+            </select><br><br>
+
+
+    </div> 
+    <div class="user-detail">
+<h1>Uploaded By</h1>
+<input type="text" placeholder=" Your Name:" id="name" required /><br><br>
+            <input type="text" placeholder="Mobile no." id="mobile" required /><br><br>
+            <input type="text" placeholder="Email:" id="email" required /><br><br>
+           <textarea placeholder="Write Your Address Here..." rows="5" id="address" required></textarea>
+    </div>
+
+    </div>
+     <button type="button" id="submitBtn" onclick="savebook()">Submit</button>
+    
+  <script src="../JAVASCRIPT/navbar.js"></script>
+  <script>
+      let selectedImageBase64 = "";
+
+      function previewImage(event) {
+          const file = event.target.files[0];
+          if (!file) return;
+
+          const reader = new FileReader();
+          reader.onload = function(e) {
+              const img = new Image();
+              img.onload = function() {
+                  // Compression Logic
+                  const canvas = document.createElement('canvas');
+                  const MAX_WIDTH = 800; // Resize to max 800px width
+                  const scale = MAX_WIDTH / img.width;
+                  canvas.width = MAX_WIDTH;
+                  canvas.height = img.height * scale;
+
+                  const ctx = canvas.getContext('2d');
+                  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                  // Convert to JPEG with 0.7 quality
+                  selectedImageBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                  document.getElementById('imagePreview').src = selectedImageBase64;
+                  console.log("✅ Image compressed. Final size:", Math.round(selectedImageBase64.length / 1024), "KB");
+              };
+              img.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+      }
+
+      async function savebook(){
+          const submitBtn = document.getElementById("submitBtn");
+          const originalText = submitBtn.innerText;
+
+          const bookData = {
+              bookname: document.getElementById("bookname").value,
+              bookauthor: document.getElementById("bookauthor").value,
+              bookpublication: document.getElementById("bookpublication").value,
+              booklanguage: document.getElementById("booklanguage").value,
+              bookvolume: document.getElementById("bookvolume").value,
+              bookprice: Number(document.getElementById("bookprice").value),
+              bookclass: document.getElementById("bookclass").value,
+              image: selectedImageBase64,
+              user: {
+                name: document.getElementById("name").value,
+                mobile: document.getElementById("mobile").value,
+                email: document.getElementById("email").value,
+                address: document.getElementById("address").value
+              }
+          };
+
+          // Validation
+          if (!bookData.bookclass) {
+              alert("Please select a book class.");
+              return;
+          }
+
+          const backendURL = "https://bookweb-backend-vu2o.onrender.com";
+
+          try {
+              submitBtn.innerText = "Uploading (Please wait)...";
+              submitBtn.disabled = true;
+
+              console.log("🚀 Attempting upload to:", backendURL + "/upload-book");
+
+              const response = await fetch(backendURL + "/upload-book", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(bookData)
+              });
+
+              let data = {};
+              try { data = await response.json(); } catch(e) {}
+
+              if (response.ok) {
+                  alert("✅ Success! Your book has been uploaded.");
+                  window.location.href = "../index.html";
+              } else {
+                  console.error("❌ Server Error:", response.status, data);
+                  alert(`❌ Server Error (${response.status}): ${data.message || "Unknown error"}`);
+              }
+          }
+          catch (error) {
+              console.error("❌ Network/Connection Error Details:", error);
+              
+              // More descriptive error message for the user
+              let errorMessage = `❌ Connection Error!\n\nDetails: ${error.message}`;
+              
+              if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                  errorMessage += "\n\nPossible Causes:\n1. The backend server (Render) is asleep/offline.\n2. You are not connected to the internet.\n3. Browser CORS policy is blocking the request.";
+              }
+              
+              alert(errorMessage + `\n\nTip: Please verify if ${backendURL} is open in another tab.`);
+          } finally {
+              submitBtn.innerText = originalText;
+              submitBtn.disabled = false;
+          }
+      }
+  </script>
+
+
+</body>
+</html>

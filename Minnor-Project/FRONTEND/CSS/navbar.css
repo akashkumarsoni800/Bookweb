@@ -1,0 +1,265 @@
+/* Shared Navbar Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(114, 60, 60);
+  padding: 0 20px;
+  color: white;
+  position: sticky;
+  top: 0;
+  height: 70px;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.navbar ul {
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.navbar ul li {
+  list-style: none;
+}
+
+.navbar ul li a {
+  color: white;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 8px 12px;
+  transition: 0.3s;
+}
+
+.navbar ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+.navbar-right {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.navbar-right a {
+  font-size: 22px;
+  color: white;
+  text-decoration: none;
+}
+
+/* Amazon-style Search Bar */
+.search-container {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  max-width: 500px;
+  margin: 0 20px;
+  background-color: white;
+  border-radius: 6px;
+  overflow: visible; /* To allow suggestions to show */
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.search-category {
+  background-color: #f3f3f3;
+  border: none;
+  padding: 8px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  border-right: 1px solid #ddd;
+  outline: none;
+  color: #555;
+  border-radius: 6px 0 0 6px;
+}
+
+.search-input {
+  flex-grow: 1;
+  border: none;
+  padding: 8px 15px;
+  font-size: 15px;
+  outline: none;
+}
+
+.search-btn {
+  background-color: #febd69;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #333;
+  border-radius: 0 6px 6px 0;
+}
+
+.search-btn:hover {
+  background-color: #f3a847;
+}
+
+/* Suggestions Box */
+#search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  z-index: 1001;
+  display: none;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.suggestion-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+.suggestion-item:hover {
+  background-color: #f3f3f3;
+}
+
+/* Profile Circle & Popup */
+.profile-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.profile-circle {
+  width: 40px;
+  height: 40px;
+  background-color: #ff5722;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.profile-popup {
+  position: absolute;
+  top: 55px;
+  right: 0;
+  width: 250px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  display: none;
+  flex-direction: column;
+  padding: 15px;
+  z-index: 1005;
+  color: #333;
+}
+
+.profile-popup.show {
+  display: flex;
+}
+
+.popup-header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.popup-header h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.popup-header p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  color: #666;
+}
+
+.popup-links a {
+  display: block;
+  padding: 10px 0;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.popup-links a:hover {
+  color: #ff5722;
+}
+
+.popup-links a i {
+  margin-right: 10px;
+  width: 20px;
+}
+
+.exit-btn {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  color: red !important;
+  font-weight: bold;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 10px;
+  }
+
+  .nav-left {
+    width: 60%;
+  }
+
+  .navbar-right {
+    width: 30%;
+    justify-content: flex-end;
+  }
+
+  .search-container {
+    width: 100%;
+    max-width: none;
+    margin: 10px 0 0;
+    order: 3;
+  }
+
+  .navbar ul {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 200px;
+    background: rgb(114, 60, 60);
+    flex-direction: column;
+    display: none;
+    padding: 15px;
+    border-radius: 0 0 10px 0;
+  }
+
+  .navbar ul.show {
+    display: flex;
+  }
+
+  .checkbtn {
+    display: block;
+  }
+}

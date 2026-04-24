@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - BOOK WEB</title>
+    <link rel="stylesheet" href="../CSS/navbar.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; }
+        .profile-wrapper { max-width: 600px; margin: 50px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .profile-wrapper h2 { text-align: center; color: rgb(114, 60, 60); margin-bottom: 30px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
+        .form-group input, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
+        .save-btn { width: 100%; background-color: rgb(114, 60, 60); color: white; padding: 15px; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; transition: background 0.3s; }
+        .save-btn:hover { background-color: #5a2d2d; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-left">
+            <label class="checkbtn" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </label>
+            <label class="logo">BOOK WEB</label>
+        </div>
+        <ul id="menu-list">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="./help.html">Help</a></li>
+            <li><a href="./My book.html">My Books</a></li>
+            <li><a href="./about us.html">About Us</a></li>
+            <li><a href="./contact us.html">Contact Us</a></li>
+        </ul>
+        <div class="search-container">
+            <select class="search-category" id="searchCategory"><option value="all">All</option></select>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search books...">
+            <button class="search-btn" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="navbar-right">
+            <div class="profile-container" id="profileArea">
+                <i class="fa-solid fa-circle-user"></i>
+            </div>
+            <div class="profile-popup" id="profilePopup">
+                <div class="popup-header"><h4 id="popupName">Guest</h4><p id="popupEmail"></p></div>
+                <div class="popup-links">
+                    <a href="javascript:void(0)" onclick="editProfile()"><i class="fa-solid fa-user-pen"></i> Edit Profile</a>
+                    <a href="javascript:void(0)" class="exit-btn" onclick="logoutUser()"><i class="fa-solid fa-right-from-bracket"></i> Exit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-wrapper">
+        <h2>Manage Profile</h2>
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="editName" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+            <label>Mobile Number</label>
+            <input type="text" id="editMobile" placeholder="Mobile Number" disabled>
+        </div>
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="editEmail" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+            <label>Address</label>
+            <textarea id="editAddress" rows="4" placeholder="Your address"></textarea>
+        </div>
+        <button class="save-btn" onclick="saveProfile()">Save Changes</button>
+    </div>
+
+    <script src="../JAVASCRIPT/navbar.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const userData = JSON.parse(localStorage.getItem("user") || "{}");
+            if (!userData.name) {
+                alert("Please login first");
+                window.location.href = "login.html";
+                return;
+            }
+            document.getElementById("editName").value = userData.name || "";
+            document.getElementById("editMobile").value = userData.mobileno || userData.mobile || "";
+            document.getElementById("editEmail").value = userData.email || "";
+            document.getElementById("editAddress").value = userData.address || "";
+        });
+
+        function saveProfile() {
+            const userData = JSON.parse(localStorage.getItem("user") || "{}");
+            userData.name = document.getElementById("editName").value;
+            userData.email = document.getElementById("editEmail").value;
+            userData.address = document.getElementById("editAddress").value;
+
+            localStorage.setItem("user", JSON.stringify(userData));
+            alert("✅ Profile updated successfully!");
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>
