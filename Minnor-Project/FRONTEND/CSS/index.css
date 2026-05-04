@@ -16,12 +16,14 @@
 
 .logo {
   font-size: 30px;
+  background: transparent;
 }
 
 .nav-left {
   display: flex;
   align-items: center;
   gap: 10px;
+  background: transparent;
 }
 
 .navbar ul {

@@ -15,12 +15,14 @@
 .logo {
   font-size: 30px;
   font-weight: bold;
+  background: transparent;
 }
 
 .nav-left {
   display: flex;
   align-items: center;
   gap: 15px;
+  background: transparent;
 }
 
 .navbar ul {

@@ -1,10 +1,11 @@
 * {
     margin: 0px;
     padding: 0px;
+}
+
+body {
     background-color: rgb(241, 240, 240);
-
-
-    }
+}
 
 .navbar {
     display: flex;
