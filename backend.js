@@ -106,6 +106,20 @@ app.get("/books", async (req, res) => {
   }
 });
 
+// Get user's own books
+app.get("/my-books", async (req, res) => {
+  try {
+    const { mobile } = req.query;
+    if (!mobile) {
+      return res.status(400).json({ message: "Mobile number is required" });
+    }
+    const books = await Book.find({ "user.mobile": mobile }).sort({ _id: -1 });
+    res.json(books);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching your books", error: error.message });
+  }
+});
+
 //sign up
 app.post ("/signup" , async (req,res)=>{
     const {name,mobileno,password,address}=req.body;
@@ -118,7 +132,13 @@ app.post ("/signup" , async (req,res)=>{
         const newUser = new User({ name, mobileno, password: hashedPassword, address });
         await newUser.save();
          const token = jwt.sign({ id: newUser._id }, JWT_SECRET, { expiresIn: "7d" });
-        res.json({ message: "signup successful", token, name: newUser.name });
+        res.json({ 
+            message: "signup successful", 
+            token, 
+            name: newUser.name, 
+            mobileno: newUser.mobileno, 
+            address: newUser.address 
+        });
     } catch (error) {
         res.status(500).json({ message: "Server error", error: error.message });
     }
@@ -136,7 +156,13 @@ app.post ("/signup" , async (req,res)=>{
                 return res.status(400).json({ message: "Invalid credentials" });
             }
             const token = jwt.sign({ id: existingUser._id }, JWT_SECRET);
-            res.json({ message: "Login successful", token, name: existingUser.name });
+            res.json({ 
+                message: "Login successful", 
+                token, 
+                name: existingUser.name, 
+                mobileno: existingUser.mobileno, 
+                address: existingUser.address 
+            });
         } catch (error) {
             res.status(500).json({ message:"Server error", error: error.message });
         }

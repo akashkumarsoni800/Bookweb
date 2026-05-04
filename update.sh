@@ -1,17 +1,11 @@
 #!/bin/bash
 
-# Ye script aapke Frontend aur Backend dono repositories ko ek saath update karega.
+# Ye script ab Frontend aur Backend dono ko ek saath single repository me update karega.
 
-echo "🚀 Pushing Frontend changes (Minnor-Project)..."
-cd Minnor-Project
-git add .
-git commit -m "Auto-update frontend"
-git push origin main
-cd ..
+echo "🚀 Pushing all changes to Bookweb repository..."
 
-echo "🚀 Pushing Backend changes (Bookweb)..."
 git add .
-git commit -m "Auto-update backend"
+git commit -m "Auto-update: Frontend and Backend"
 git push origin main
 
-echo "✅ All changes pushed to both repositories!"
+echo "✅ Everything pushed successfully to your repository!"

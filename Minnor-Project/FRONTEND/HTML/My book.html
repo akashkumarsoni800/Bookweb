@@ -61,60 +61,13 @@
     </div>
 
 <div class="mybooks">
-
-    <div class="mybook">
-
-       
-        <div class="book-card">
-            <img src="../IMAGES/maths.jpg" alt="book1">
-            <h3 class="b-name">Maths</h3>
-
-            <p class="b-author" hidden>R D Sharma</p>
-            <p class="b-publication" hidden>Dhanpat Rai</p>
-            <p class="b-language" hidden>English</p>
-            <p class="b-volume" hidden>1</p>
-            <p class="b-class" hidden>Diploma</p>
-            <p class="b-price" hidden>350</p>
-
-            <button class="btn">Book Details</button>
-        </div>
-
-   
-        <div class="book-card">
-            <img src="../IMAGES/java.jpg" alt="book1">
-            <h3 class="b-name">Java</h3>
-
-            <p class="b-author" hidden>James Gosling</p>
-            <p class="b-publication" hidden>Oracle</p>
-            <p class="b-language" hidden>English</p>
-            <p class="b-volume" hidden>1</p>
-            <p class="b-class" hidden>Diploma</p>
-            <p class="b-price" hidden>450</p>
-
-            <button class="btn">Book Details</button>
-        </div>
-
-       
-        <div class="book-card">
-            <img src="../IMAGES/physics.jpg" alt="book1">
-            <h3 class="b-name">Physics</h3>
-
-            <p class="b-author" hidden>H C Verma</p>
-            <p class="b-publication" hidden>Bharati Bhawan</p>
-            <p class="b-language" hidden>English</p>
-            <p class="b-volume" hidden>2</p>
-            <p class="b-class" hidden>Diploma</p>
-            <p class="b-price" hidden>400</p>
-
-            <button class="btn">Book Details</button>
-        </div>
-
+    <div class="mybook" id="myBooksContainer">
+        <p style="text-align: center; width: 100%; color: #666;">Loading your books...</p>
     </div>
 </div>
 
-
-<div id="popup" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6);">
-    <div style="background:white; width:300px; margin:100px auto; padding:20px; border-radius:10px;">
+<div id="popup" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index: 1000;">
+    <div style="background:white; width:300px; margin:100px auto; padding:20px; border-radius:10px; position: relative;">
         <h3 id="p_name"></h3>
         <p><b>Author:</b> <span id="p_author"></span></p>
         <p><b>Publication:</b> <span id="p_publication"></span></p>
@@ -123,75 +76,11 @@
         <p><b>Class:</b> <span id="p_class"></span></p>
         <p><b>Price:</b> ₹<span id="p_price"></span></p>
 
-        <button onclick="closePopup()">Close</button>
-    </div>
-
-    
-    </div>
-    <div class="mybook">
-
-       
-        <div class="book-card">
-            <img src="../IMAGES/maths.jpg" alt="book1">
-            <h3 class="b-name">Maths</h3>
-
-            <p class="b-author" hidden>R D Sharma</p>
-            <p class="b-publication" hidden>Dhanpat Rai</p>
-            <p class="b-language" hidden>English</p>
-            <p class="b-volume" hidden>1</p>
-            <p class="b-class" hidden>Diploma</p>
-            <p class="b-price" hidden>350</p>
-
-            <button class="btn">Book Details</button>
-        </div>
-
-   
-        <div class="book-card">
-            <img src="../IMAGES/java.jpg" alt="book1">
-            <h3 class="b-name">Java</h3>
-
-            <p class="b-author" hidden>James Gosling</p>
-            <p class="b-publication" hidden>Oracle</p>
-            <p class="b-language" hidden>English</p>
-            <p class="b-volume" hidden>1</p>
-            <p class="b-class" hidden>Diploma</p>
-            <p class="b-price" hidden>450</p>
-
-            <button class="btn">Book Details</button>
-        </div>
-
-       
-        <div class="book-card">
-            <img src="../IMAGES/physics.jpg" alt="book1">
-            <h3 class="b-name">Physics</h3>
-
-            <p class="b-author" hidden>H C Verma</p>
-            <p class="b-publication" hidden>Bharati Bhawan</p>
-            <p class="b-language" hidden>English</p>
-            <p class="b-volume" hidden>2</p>
-            <p class="b-class" hidden>Diploma</p>
-            <p class="b-price" hidden>400</p>
-
-            <button class="btn">Book Details</button>
-        </div>
-
+        <button onclick="closePopup()" style="margin-top: 10px; cursor: pointer; padding: 5px 10px; background: #6363f1; color: white; border: none; border-radius: 5px;">Close</button>
     </div>
 </div>
 
 
-<div id="popup" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6);">
-    <div style="background:white; width:300px; margin:100px auto; padding:20px; border-radius:10px;">
-        <h3 id="p_name"></h3>
-        <p><b>Author:</b> <span id="p_author"></span></p>
-        <p><b>Publication:</b> <span id="p_publication"></span></p>
-        <p><b>Language:</b> <span id="p_language"></span></p>
-        <p><b>Volume:</b> <span id="p_volume"></span></p>
-        <p><b>Class:</b> <span id="p_class"></span></p>
-        <p><b>Price:</b> ₹<span id="p_price"></span></p>
-
-        <button onclick="closePopup()">Close</button>
-    </div>
-</div>
 
 <script src="../JAVASCRIPT/navbar.js"></script>
 <script src="../JAVASCRIPT/My book.js"></script>

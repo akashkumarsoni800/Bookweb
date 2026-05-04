@@ -119,6 +119,14 @@
     }
 
     document.getElementById("result").innerText = "✅ " + message;
+    
+    // Save user data and redirect
+    if (data.name) {
+      localStorage.setItem("user", JSON.stringify(data));
+      setTimeout(() => {
+        window.location.href = "../index.html";
+      }, 1500);
+    }
       
     }catch (err) {
     document.getElementById("result").innerText = "❌ Network/Error: " + err.message;
