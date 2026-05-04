@@ -101,13 +101,16 @@
 
       document.addEventListener("DOMContentLoaded", () => {
           const userData = localStorage.getItem("user");
-          if (userData) {
-              const user = JSON.parse(userData);
-              document.getElementById("name").value = user.name || "";
-              document.getElementById("mobile").value = user.mobileno || "";
-              document.getElementById("email").value = user.email || "";
-              document.getElementById("address").value = user.address || "";
+          if (!userData) {
+              alert("❌ Access Denied: Please login first to upload a book.");
+              window.location.href = "login.html";
+              return;
           }
+          const user = JSON.parse(userData);
+          document.getElementById("name").value = user.name || "";
+          document.getElementById("mobile").value = user.mobileno || "";
+          document.getElementById("email").value = user.email || "";
+          document.getElementById("address").value = user.address || "";
       });
 
       function previewImage(event) {
@@ -171,13 +174,21 @@
               submitBtn.innerText = "Uploading (Please wait)...";
               submitBtn.disabled = true;
 
-              console.log("🚀 Attempting upload to:", backendURL + "/upload-book");
+               const userData = JSON.parse(localStorage.getItem("user"));
+               if (!userData || !userData.token) {
+                   alert("Session expired. Please login again.");
+                   window.location.href = "login.html";
+                   return;
+               }
 
-              const response = await fetch(backendURL + "/upload-book", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(bookData)
-              });
+               const response = await fetch(backendURL + "/upload-book", {
+                   method: "POST",
+                   headers: { 
+                       "Content-Type": "application/json",
+                       "Authorization": `Bearer ${userData.token}`
+                   },
+                   body: JSON.stringify(bookData)
+               });
 
               let data = {};
               try { data = await response.json(); } catch(e) {}

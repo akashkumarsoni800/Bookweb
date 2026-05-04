@@ -31,7 +31,11 @@ async function fetchMyBooks() {
     }
 
     try {
-        const res = await fetch(`${backendURL}/my-books?mobile=${mobile}`);
+        const res = await fetch(`${backendURL}/my-books`, {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        });
         const books = await res.json();
 
         if (!res.ok) throw new Error(books.message || "Failed to fetch");

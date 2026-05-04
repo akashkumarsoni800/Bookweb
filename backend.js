@@ -65,6 +65,20 @@ const bookSchema=new mongoose.Schema({
 })
 const Book = mongoose.model("Book", bookSchema);
 
+// Middleware to authenticate JWT
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    
+    if (token == null) return res.status(401).json({ message: "Access denied. Please login." });
+
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+        if (err) return res.status(403).json({ message: "Session expired. Please login again." });
+        req.user = user;
+        next();
+    });
+};
+
 /*upload user schema
 const uploadUserSchema=new mongoose.Schema({
     name:String,
@@ -73,8 +87,8 @@ const uploadUserSchema=new mongoose.Schema({
     address:String,
 })
 const UploadUser = mongoose.model("UploadUser", uploadUserSchema);*/
-// Upload Book
-app.post("/upload-book", async (req, res) => {
+// Upload Book (SECURE)
+app.post("/upload-book", authenticateToken, async (req, res) => {
   try {
     const { bookname, bookauthor, bookpublication, booklanguage, bookvolume, bookprice, bookclass, image, user } = req.body;
 
@@ -106,13 +120,10 @@ app.get("/books", async (req, res) => {
   }
 });
 
-// Get user's own books
-app.get("/my-books", async (req, res) => {
+// Get user's own books (SECURE)
+app.get("/my-books", authenticateToken, async (req, res) => {
   try {
-    const { mobile } = req.query;
-    if (!mobile) {
-      return res.status(400).json({ message: "Mobile number is required" });
-    }
+    const mobile = req.user.mobile;
     const books = await Book.find({ "user.mobile": mobile }).sort({ _id: -1 });
     res.json(books);
   } catch (error) {
@@ -131,7 +142,7 @@ app.post ("/signup" , async (req,res)=>{
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({ name, mobileno, password: hashedPassword, address });
         await newUser.save();
-         const token = jwt.sign({ id: newUser._id }, JWT_SECRET, { expiresIn: "7d" });
+        const token = jwt.sign({ id: newUser._id, mobile: newUser.mobileno }, JWT_SECRET, { expiresIn: "7d" });
         res.json({ 
             message: "signup successful", 
             token, 
@@ -155,7 +166,7 @@ app.post ("/signup" , async (req,res)=>{
             if (!isMatch) {
                 return res.status(400).json({ message: "Invalid credentials" });
             }
-            const token = jwt.sign({ id: existingUser._id }, JWT_SECRET);
+            const token = jwt.sign({ id: existingUser._id, mobile: existingUser.mobileno }, JWT_SECRET, { expiresIn: "7d" });
             res.json({ 
                 message: "Login successful", 
                 token, 
